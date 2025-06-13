@@ -110,12 +110,13 @@ dist_a_audio() {
   echo -e "\r\n[4/$PROCESS_STEP] Moving [$output_audio_path] to [dist/]"
   mkdir -p ./dist
   mv "$output_audio_path" ./dist
-  rm -r "$TEMP_DIR"
   # -- start: moving latest audio to dist dir --
 }
 
 . "$TEMP_DIR/metadata.sh"
-for album_dir in "$TEMP_DIR/*/"
+for album_dir in $TEMP_DIR/*/
 do
   dist_a_audio $album_dir
 done
+
+rm -r "$TEMP_DIR"
