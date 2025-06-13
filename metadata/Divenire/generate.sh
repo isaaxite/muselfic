@@ -21,6 +21,7 @@ METADATA_COMMENT="Cover (front)"
 # invalid
 # cat "./temp.txt"
 
+
 rm -rf $TEMP_PATH
 mkdir $TEMP_PATH
 # echo "$INPUT_FILE_PATH $TEMP_INPUT_NAME"
