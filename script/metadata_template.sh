@@ -18,8 +18,8 @@ list_album_dir() {
 attach_audio_metadata_template_to() {
   AUDIO_DIR_NAME=`uuidgen -x`
 
-  echo -e "Album dir path(e.g. data/<album>):"
-  read ALBUM_DIR_PATH
+  echo ""
+  read -p "Album dir path(e.g. data/<album>): " ALBUM_DIR_PATH
 
   if [ -z $ALBUM_DIR_PATH ]; then
     exit 1
@@ -41,6 +41,7 @@ attach_audio_metadata_template_to() {
 attach_audio_metadata_to() {
   AUDIO_DIR_NAME=`uuidgen -x`
 
+  echo ""
   read -p "Album dir path(e.g. data/<album>): " ALBUM_DIR_PATH
 
   if [ -z $ALBUM_DIR_PATH ]; then
