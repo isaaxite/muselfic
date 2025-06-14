@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. script/util.sh
+
 PROCESS_STEP="4"
 TEMP_DIR="./temp"
 DATA_DIR=""
@@ -7,44 +9,47 @@ DATA_DIR=""
 TEMP_AVG_KEY=""
 TEMP_AVG_VAL=""
 
-# -- start: set avg --
-is_key () {
-  # echo "exec is_key func"
-  if [[ "$1" == "--"* ]]; then
-    return 0
-  else
-    return 1
-  fi
-}
+# # -- start: set avg --
+# is_key () {
+#   # echo "exec is_key func"
+#   if [[ "$1" == "--"* ]]; then
+#     return 0
+#   else
+#     return 1
+#   fi
+# }
 
-set_avg() {
-  # echo "set avg, TEMP_AVG_KEY=$TEMP_AVG_KEY, TEMP_AVG_VAL=$TEMP_AVG_VAL"
+# set_avg() {
+#   # echo "set avg, TEMP_AVG_KEY=$TEMP_AVG_KEY, TEMP_AVG_VAL=$TEMP_AVG_VAL"
 
-  if [ "$TEMP_AVG_KEY" == "--data-dir" ]; then
-    DATA_DIR="$TEMP_AVG_VAL"
-  fi
+#   if [ "$TEMP_AVG_KEY" == "--data-dir" ]; then
+#     DATA_DIR="$TEMP_AVG_VAL"
+#   fi
 
-  TEMP_AVG_KEY=""
-  TEMP_AVG_VAL=""
-}
+#   TEMP_AVG_KEY=""
+#   TEMP_AVG_VAL=""
+# }
 
-while [ "$#" -gt "0" ]
-do
-  if is_key $1; then
-    # echo "is key"
-    if [ -n "$TEMP_AVG_KEY" ]; then
-      # echo "set temp key name"
-      set_avg
-    fi
-    TEMP_AVG_KEY="$1"
-  else
-    # echo "is value"
-    TEMP_AVG_VAL="$1"
-  fi
-  shift
-done
-set_avg
-# -- end: set avg --
+# while [ "$#" -gt "0" ]
+# do
+#   if is_key $1; then
+#     # echo "is key"
+#     if [ -n "$TEMP_AVG_KEY" ]; then
+#       # echo "set temp key name"
+#       set_avg
+#     fi
+#     TEMP_AVG_KEY="$1"
+#   else
+#     # echo "is value"
+#     TEMP_AVG_VAL="$1"
+#   fi
+#   shift
+# done
+# set_avg
+# # -- end: set avg --
+
+select_album
+DATA_DIR=$SELECTED_ALBUM_PATH
 
 # -- start: Copy audio data dir to temp dir --
 echo -e "\r\n[1/$PROCESS_STEP] Copy audio data dir to temp dir."
