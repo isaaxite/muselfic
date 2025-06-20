@@ -1,8 +1,10 @@
+. script/global.sh
+
 select_album() {
   RET_SELECTED_ALBUM_PATH=""
   local idx=0
   local arr=();
-  for dir in data/*
+  for dir in $DATA_DIRPATH/*
   do
     local album_metadata_path="$dir/metadata.sh"
     . "$album_metadata_path"
@@ -20,7 +22,7 @@ multiple_select_album() {
   RET_SELECTED_ALBUM_PATH_ARR=()
   local idx=0
   local arr=();
-  for dir in data/*
+  for dir in $DATA_DIRPATH/*
   do
     local album_metadata_path="$dir/metadata.sh"
     . "$album_metadata_path"
