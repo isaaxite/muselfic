@@ -14,7 +14,7 @@ select_album() {
       ((idx++))
     fi
   done
-  read -p "Selected Index: " selected_idx_str
+  read -p "Selected Index: " selected_idx
   RET_SELECTED_ALBUM_PATH="${arr[$selected_idx]}"
 }
 
@@ -66,4 +66,8 @@ rm_temp_process_dist_dir() {
   if [ -d "$TEMP_PROCESS_DIST_DIR" ]; then
     rm -r "$TEMP_PROCESS_DIST_DIR"
   fi
+}
+
+gen_uuid() {
+  echo `uuidgen -x`
 }
