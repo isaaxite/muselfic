@@ -12,8 +12,31 @@ select_album() {
       ((idx++))
     fi
   done
-  read -p "Selected Index: " selected_idx
+  read -p "Selected Index: " selected_idx_str
   RET_SELECTED_ALBUM_PATH="${arr[$selected_idx]}"
+}
+
+multiple_select_album() {
+  RET_SELECTED_ALBUM_PATH_ARR=()
+  local idx=0
+  local arr=();
+  for dir in data/*
+  do
+    local album_metadata_path="$dir/metadata.sh"
+    . "$album_metadata_path"
+    if [ -n "$METADATA_ALBUM" ]; then
+      arr[$idx]=$dir
+      echo "$idx - $METADATA_ALBUM: $dir"
+      ((idx++))
+    fi
+  done
+  read -p "Selected Indexs(Separated by Space): " selected_idx_str
+  # RET_SELECTED_ALBUM_PATH="${arr[$selected_idx]}"
+  read -ra selected_idx_arr <<< "$selected_idx_str"
+  for idx in "${selected_idx_arr[@]}"
+  do
+    RET_SELECTED_ALBUM_PATH_ARR+=("${arr[$idx]}")
+  done
 }
 
 select_audio_dirpath() {

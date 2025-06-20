@@ -222,12 +222,16 @@ dist_album() {
   prompt_temp_process_dist_dir(){
     local output_dirpath=$1
 
-    select_album
-    local selected_album_dirpath=$RET_SELECTED_ALBUM_PATH
+    multiple_select_album
+    local selected_album_dirpath_arr=(${RET_SELECTED_ALBUM_PATH_ARR[@]})
+    unset RET_SELECTED_ALBUM_PATH_ARR
 
-    cp_album2temp_process_distpath $selected_album_dirpath
-    unprompt_dist_temp_album $output_dirpath
-    rm_temp_process_dist_dir
+    for selected_album_dirpath in "${selected_album_dirpath_arr[@]}"
+    do
+      cp_album2temp_process_distpath $selected_album_dirpath
+      unprompt_dist_temp_album $output_dirpath
+      rm_temp_process_dist_dir
+    done
   }
 
   # cmd: ./muselfic.sh dist album
@@ -260,6 +264,9 @@ dist_album() {
   fi
 }
 
+# func
+# dist audios
+# avg1 rule
 dist_data() {
   local avg1=$1
 
