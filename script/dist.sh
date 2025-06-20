@@ -77,8 +77,7 @@ unprompt_dist_album() {
   local output_dirpaht=$2
 
   rm_temp_process_dist_dir
-
-  cp -r "$cur_album_dirpath" "$TEMP_PROCESS_DIST_DIR"
+  cp_album_2temp_process_dist_dir $cur_album_dirpath
   unprompt_dist_temp_album $output_dirpaht
 }
 
