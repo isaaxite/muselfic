@@ -1,43 +1,44 @@
 #!/bin/sh
 
+. script/global.sh
+. script/util.sh
+
 AVG="$1"
 NEW_METADATA_TEMPLATE_CMD="${AVG:=none}"
 
-. script/util.sh
+# avg1: audio metadata filepath
+# avg2: audio title
+# avg3: audio artist
+# avg4: audio track number
+write_audio_metadata_template_to() {
+  local audio_metadata_filepath=$1
+  local title=$2
+  local artist=$3
+  local track_number=$4
 
-list_album_dir() {
-  echo "List of <Album Name>: <Album Dir Path>:"
-  for dir in data/*
-  do
-    MD_ALBUM_METADATA_PATH="$dir/metadata.sh"
-    . "$MD_ALBUM_METADATA_PATH"
-    if [ -n "$METADATA_ALBUM" ]; then
-      echo "- $METADATA_ALBUM: $dir"
-    fi
-  done
+  echo "#[required] song name" >> "$audio_metadata_filepath"
+  echo "METADATA_TITLE=\"$title\"" >> "$audio_metadata_filepath"
+
+  echo "#[required]" >> "$audio_metadata_filepath"
+  echo "METADATA_ARTIST=\"$artist\"" >> "$audio_metadata_filepath"
+
+  echo "#[required] number" >> "$audio_metadata_filepath"
+  echo "METADATA_TRACK_NUMBER=\"$track_number\"" >> "$audio_metadata_filepath"
 }
 
 attach_audio_metadata_template_to() {
-  AUDIO_DIR_NAME=`uuidgen -x`
+  local album_dirpath=$1
+  local audio_dirname=$(gen_uuid)
+
+  local audio_dirpath="$album_dirpath/$audio_dirname"
+  local audio_metadata_filepath="$audio_dirpath/metadata.sh"
+
+  mkdir -p "$audio_dirpath"
+  touch "$audio_metadata_filepath"
+  write_audio_metadata_template_to $audio_metadata_filepath
 
   echo ""
-  read -p "Album dir path(e.g. data/<album>): " ALBUM_DIR_PATH
-
-  if [ -z $ALBUM_DIR_PATH ]; then
-    exit 1
-  fi
-
-  AUDIO_DIR_PATH="$ALBUM_DIR_PATH/$AUDIO_DIR_NAME"
-  AUDIO_METADATA_PAHT="$AUDIO_DIR_PATH/metadata.sh"
-
-  mkdir -p "$AUDIO_DIR_PATH"
-  touch "$AUDIO_METADATA_PAHT"
-  echo "#[required] song name" >> "$AUDIO_METADATA_PAHT"
-  echo "METADATA_TITLE=\"\"" >> "$AUDIO_METADATA_PAHT"
-  echo "#[required]" >> "$AUDIO_METADATA_PAHT"
-  echo "METADATA_ARTIST=\"\"" >> "$AUDIO_METADATA_PAHT"
-  echo "#[required] number" >> "$AUDIO_METADATA_PAHT"
-  echo "METADATA_TRACK_NUMBER=\"\"" >> "$AUDIO_METADATA_PAHT"
+  echo "Audio Dirpath: $audio_dirpath"
 }
 
 attach_audio_metadata_to() {
@@ -55,16 +56,53 @@ attach_audio_metadata_to() {
   mkdir -p "$AUDIO_DIR_PATH"
   touch "$AUDIO_METADATA_PAHT"
 
-  read -p "Title: " aamt_title
-  read -p "Artist: " aamt_artist
-  read -p "Track Number: " aamt_track_number
+  read -p "Title: " title
+  read -p "Artist: " artist
+  read -p "Track Number: " track_number
 
-  echo "#[required] song name" >> "$AUDIO_METADATA_PAHT"
-  echo "METADATA_TITLE=\"$aamt_title\"" >> "$AUDIO_METADATA_PAHT"
-  echo "#[required]" >> "$AUDIO_METADATA_PAHT"
-  echo "METADATA_ARTIST=\"$aamt_artist\"" >> "$AUDIO_METADATA_PAHT"
-  echo "#[required] number" >> "$AUDIO_METADATA_PAHT"
-  echo "METADATA_TRACK_NUMBER=\"$aamt_track_number\"" >> "$AUDIO_METADATA_PAHT"
+  write_audio_metadata_template_to \
+    $AUDIO_METADATA_PAHT \
+    $title \
+    $artist \
+    $track_number
+
+  echo ""
+  echo "Audio Dirpath: $AUDIO_DIR_PATH"
+}
+
+# avg1: filepath
+# avg2: album name
+# avg3: total tracks
+# avg4: album artist
+# avg5: genre
+# avg6: release date
+# avg7: composer
+write_album_metadata_to() {
+  local album_metadata_filepath=$1
+  local album_name=$2
+  local total_tracks=$3
+  local album_artist=$4
+  local genre=$5
+  local release_date=$6
+  local composer=$7
+
+  echo "#[required] album name" >> "$album_metadata_filepath"
+  echo "METADATA_ALBUM=\"$album_name\"" >> "$album_metadata_filepath"
+
+  echo "#[required] number" >> "$album_metadata_filepath"
+  echo "METADATA_TOTAL_TRACKS=\"$total_tracks\"" >> "$album_metadata_filepath"
+
+  echo "#[required]" >> "$album_metadata_filepath"
+  echo "METADATA_ALBUM_ARTIST=\"$album_artist\"" >> "$album_metadata_filepath"
+
+  echo "#[required] genre[,genre0][,genre1][,...]" >> "$album_metadata_filepath"
+  echo "METADATA_GENRE=\"$genre\"" >> "$album_metadata_filepath"
+
+  echo "#[required] yyyy/mm/dd" >> "$album_metadata_filepath"
+  echo "METADATA_RELEASE_DATA=\"$nam_release_date\"" >> "$album_metadata_filepath"
+
+  echo "#[required] composer[,composer0][,composer1][,...]" >> "$album_metadata_filepath"
+  echo "METADATA_COMPOSER=\"$composer\"" >> "$album_metadata_filepath"
 }
 
 new_album_metadata_template() {
@@ -75,48 +113,39 @@ new_album_metadata_template() {
   mkdir "$ALBUM_DIR_PATH"
 
   touch "$ALBUM_METADATA_PAHT"
-  echo "#[required] album name" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_ALBUM=\"\"" >> "$ALBUM_METADATA_PAHT"
-  echo "#[required] number" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_TOTAL_TRACKS=\"\"" >> "$ALBUM_METADATA_PAHT"
-  echo "#[required]" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_ALBUM_ARTIST=\"\"" >> "$ALBUM_METADATA_PAHT"
-  echo "#[required] genre[,genre0][,genre1][,...]" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_GENRE=\"\"" >> "$ALBUM_METADATA_PAHT"
-  echo "#[required] yyyy/mm/dd" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_RELEASE_DATA=\"\"" >> "$ALBUM_METADATA_PAHT"
-  echo "#[required] composer[,composer0][,composer1][,...]" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_COMPOSER=\"\"" >> "$ALBUM_METADATA_PAHT"
+  write_album_metadata_to $ALBUM_METADATA_PAHT
+
+  echo ""
+  echo "Album Dirpath: $ALBUM_DIR_PATH"
 }
 
 new_album_metadata() {
-  DATA_DIR_PATH="./data"
-  ALBUM_NAME=`uuidgen -x`
-  ALBUM_DIR_PATH="$DATA_DIR_PATH/$ALBUM_NAME"
-  ALBUM_METADATA_PAHT="$ALBUM_DIR_PATH/metadata.sh"
+  local DATA_DIR_PATH="$DATA_DIRPATH"
+  local ALBUM_NAME=$(gen_uuid)
+  local ALBUM_DIR_PATH="$DATA_DIR_PATH/$ALBUM_NAME"
+  local ALBUM_METADATA_PAHT="$ALBUM_DIR_PATH/metadata.sh"
+  
   mkdir "$ALBUM_DIR_PATH"
-
   touch "$ALBUM_METADATA_PAHT"
   
-  read -p "Album Name: " nam_album_name
-  read -p "Total Tracks: " nam_total_tracks
-  read -p "Album Artist: " nam_album_artist
-  read -p "Genre(<genre>[,genre0][,genre1][,...]): " nam_genre
-  read -p "Release Date(<yyyy | yyyy/mm/dd>): " nam_release_date
-  read -p "Composer(<composer>[,composer0][,composer1][,...]): " nam_composer
+  read -p "Album Name: " album_name
+  read -p "Total Tracks: " total_tracks
+  read -p "Album Artist: " album_artist
+  read -p "Genre(<genre>[,genre0][,genre1][,...]): " genre
+  read -p "Release Date(<yyyy | yyyy/mm/dd>): " release_date
+  read -p "Composer(<composer>[,composer0][,composer1][,...]): " composer
 
-  echo "#[required] album name" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_ALBUM=\"$nam_album_name\"" >> "$ALBUM_METADATA_PAHT"
-  echo "#[required] number" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_TOTAL_TRACKS=\"$nam_total_tracks\"" >> "$ALBUM_METADATA_PAHT"
-  echo "#[required]" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_ALBUM_ARTIST=\"$nam_album_artist\"" >> "$ALBUM_METADATA_PAHT"
-  echo "#[required] genre[,genre0][,genre1][,...]" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_GENRE=\"$nam_genre\"" >> "$ALBUM_METADATA_PAHT"
-  echo "#[required] yyyy/mm/dd" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_RELEASE_DATA=\"$nam_release_date\"" >> "$ALBUM_METADATA_PAHT"
-  echo "#[required] composer[,composer0][,composer1][,...]" >> "$ALBUM_METADATA_PAHT"
-  echo "METADATA_COMPOSER=\"$nam_composer\"" >> "$ALBUM_METADATA_PAHT"
+  write_album_metadata_to \
+    $ALBUM_METADATA_PAHT \
+    $album_name \
+    $total_tracks \
+    $album_artist \
+    $genre \
+    $release_date \
+    $composer
+
+  echo ""
+  echo "Album Dirpath: $ALBUM_DIR_PATH"
 }
 
 if [ $NEW_METADATA_TEMPLATE_CMD == "--album-template" ]; then
@@ -124,14 +153,18 @@ if [ $NEW_METADATA_TEMPLATE_CMD == "--album-template" ]; then
 elif [ $NEW_METADATA_TEMPLATE_CMD == "--album" ]; then
   new_album_metadata
 elif [ $NEW_METADATA_TEMPLATE_CMD == "--audio-template" ]; then
-  list_album_dir
-  attach_audio_metadata_template_to
+  select_album
+  ttt_album_dirpath=$RET_SELECTED_ALBUM_PATH
+  unset RET_SELECTED_ALBUM_PATH
+  attach_audio_metadata_template_to $ttt_album_dirpath
 elif [ $NEW_METADATA_TEMPLATE_CMD == "--audio" ]; then
   select_album
-  attach_audio_metadata_to $SELECTED_ALBUM_PATH
+  ttt_album_dirpath=$RET_SELECTED_ALBUM_PATH
+  unset RET_SELECTED_ALBUM_PATH
+  attach_audio_metadata_to $ttt_album_dirpath
 elif [ $NEW_METADATA_TEMPLATE_CMD == "--test" ]; then
-  select_album
-  echo $SELECTED_ALBUM_PATH
+  uuid=$(gen_uuid)
+  echo $uuid
 else
   echo ""
   echo "--album: new a album metadata template to [data/<album>]"

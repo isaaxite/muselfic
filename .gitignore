@@ -1,6 +1,7 @@
 dist
 temp
 dist-*
+dist_*
 cabal-dev
 *.o
 *.hi
