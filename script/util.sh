@@ -68,6 +68,11 @@ rm_temp_process_dist_dir() {
   fi
 }
 
+cp_album_2temp_process_dist_dir() {
+  local album_dirpath=$1
+  cp -r "$album_dirpath" "$TEMP_PROCESS_DIST_DIR"
+}
+
 gen_uuid() {
   echo `uuidgen -x`
 }
