@@ -1,0 +1,4 @@
+TEMP_PROCESS_DIST_DIR="temp"
+DATA_DIRPATH="data"
+DIST_DIRPATH="dist_test"
+OPT_OUTPUT_DIRPATH="--dir"
