@@ -1,5 +1,3 @@
-#!/bin/sh
-
 . script/global.sh
 . script/util.sh
 
@@ -148,26 +146,49 @@ new_album_metadata() {
   echo "Album Dirpath: $ALBUM_DIR_PATH"
 }
 
-if [ $NEW_METADATA_TEMPLATE_CMD == "--album-template" ]; then
-  new_album_metadata_template
-elif [ $NEW_METADATA_TEMPLATE_CMD == "--album" ]; then
-  new_album_metadata
-elif [ $NEW_METADATA_TEMPLATE_CMD == "--audio-template" ]; then
-  select_album
-  ttt_album_dirpath=$RET_SELECTED_ALBUM_PATH
-  unset RET_SELECTED_ALBUM_PATH
-  attach_audio_metadata_template_to $ttt_album_dirpath
-elif [ $NEW_METADATA_TEMPLATE_CMD == "--audio" ]; then
-  select_album
-  ttt_album_dirpath=$RET_SELECTED_ALBUM_PATH
-  unset RET_SELECTED_ALBUM_PATH
-  attach_audio_metadata_to $ttt_album_dirpath
-elif [ $NEW_METADATA_TEMPLATE_CMD == "--test" ]; then
-  uuid=$(gen_uuid)
-  echo $uuid
-else
-  echo ""
-  echo "--album: new a album metadata template to [data/<album>]"
-  echo "--audio: new a audio metadata template to [data/<album>/<audio>]"
-  exit 1;
-fi
+# cmd: ./muselfic.sh metadata album[ --template]
+# subcmd: album
+# subcmd: album --template
+#
+# cmd: ./muselfic.sh metadata audio[ --template]
+# subcmd: audio
+# subcmd: audio --template
+#
+# avg1: rule, <album | audio>
+# avg2: option, [--template]
+add_metadata_asset() {
+  local avg1=$1
+  local avg2=$2
+
+  if [ -z "$avg1" ]; then
+    echo "Miss rule between \"album\" or \"audio\""
+    exit 1
+  fi
+
+  case $avg1 in
+    ("album")
+      if [ "$avg2" == "--template" ]; then
+        new_album_metadata_template
+      else
+        new_album_metadata
+      fi
+      ;;
+    ("audio")
+      if [ "$avg2" == "--template" ]; then
+        select_album
+        local album_dirpath=$RET_SELECTED_ALBUM_PATH
+        unset RET_SELECTED_ALBUM_PATH
+        attach_audio_metadata_template_to $album_dirpath
+      else
+        select_album
+        local album_dirpath=$RET_SELECTED_ALBUM_PATH
+        unset RET_SELECTED_ALBUM_PATH
+        attach_audio_metadata_to $album_dirpath
+      fi
+      ;;
+    (*)
+      echo "Wrong Rule!"
+      exit 1
+  esac
+}
+
