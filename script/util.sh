@@ -10,7 +10,8 @@ select_album() {
     . "$album_metadata_path"
     if [ -n "$METADATA_ALBUM" ]; then
       arr[$idx]=$dir
-      echo "$idx - $METADATA_ALBUM: $dir"
+      idx_str="0${idx}"
+      echo -e "${WHITE}${idx_str: -2}${NC} ${YELLOW}${METADATA_ALBUM}${NC}: ${CYAN}${dir}${NC}"
       ((idx++))
     fi
   done

@@ -2,12 +2,13 @@
 . script/dist.sh
 . script/metadata.sh
 . script/extract.sh
+. script/list.sh
 
 topest_avg1=$1
 shift
 case $topest_avg1 in
   ("dist") dist_data "$@";;
-  ("list") echo "list";;
+  ("list") list_data "$@";;
   ("metadata") add_metadata_asset "$@";;
   ("extract") extract_audio_to "$@";;
   (*)
