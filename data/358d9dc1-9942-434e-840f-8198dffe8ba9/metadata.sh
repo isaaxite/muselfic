@@ -7,6 +7,6 @@ METADATA_ALBUM_ARTIST="Ludovico Einaudi"
 #[required] genre[,genre0][,genre1][,...]
 METADATA_GENRE="Contemporary classical music"
 #[required] yyyy/mm/dd
-METADATA_RELEASE_DATA="2006"
+METADATA_RELEASE_DATE="2006"
 #[required] composer[,composer0][,composer1][,...]
 METADATA_COMPOSER="Ludovico Einaudi"

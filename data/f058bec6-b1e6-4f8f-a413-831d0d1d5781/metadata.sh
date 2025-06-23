@@ -7,6 +7,6 @@ METADATA_ALBUM_ARTIST="沙宝亮"
 #[required] genre[,genre0][,genre1][,...]
 METADATA_GENRE="2013"
 #[required] yyyy/mm/dd
-METADATA_RELEASE_DATA=""
+METADATA_RELEASE_DATE=""
 #[required] composer[,composer0][,composer1][,...]
 METADATA_COMPOSER=""

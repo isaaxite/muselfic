@@ -7,6 +7,6 @@ METADATA_ALBUM_ARTIST="张蔷"
 #[required] genre[,genre0][,genre1][,...]
 METADATA_GENRE="Pop"
 #[required] yyyy/mm/dd
-METADATA_RELEASE_DATA="2017"
+METADATA_RELEASE_DATE="2017"
 #[required] composer[,composer0][,composer1][,...]
 METADATA_COMPOSER="马赛"

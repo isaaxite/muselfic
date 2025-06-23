@@ -77,3 +77,8 @@ cp_album_2temp_process_dist_dir() {
 gen_uuid() {
   echo `uuidgen -x`
 }
+
+warning_echo() {
+  local msg="$1"
+  echo -e "${YELLOW}$msg${NC}"
+}

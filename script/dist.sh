@@ -36,7 +36,7 @@ unprompt_dist_a_audio() {
   echo "Track: $METADATA_TRACK_NUMBER/$METADATA_TOTAL_TRACKS"
   echo "METADATA_ALBUM_ARTIST: $METADATA_ALBUM_ARTIST"
   echo "METADATA_GENRE: $METADATA_GENRE"
-  echo "METADATA_RELEASE_DATA: $METADATA_RELEASE_DATA"
+  echo "METADATA_RELEASE_DATE: $METADATA_RELEASE_DATE"
   echo "METADATA_COMPOSER: $METADATA_COMPOSER"
   echo ""
 
@@ -48,7 +48,7 @@ unprompt_dist_a_audio() {
     -metadata track="$METADATA_TRACK_NUMBER/$METADATA_TOTAL_TRACKS" \
     -metadata album_artist="$METADATA_ALBUM_ARTIST" \
     -metadata genre="$METADATA_GENRE" \
-    -metadata date="$METADATA_RELEASE_DATA" \
+    -metadata date="$METADATA_RELEASE_DATE" \
     -metadata composer="$METADATA_COMPOSER" \
     -c copy "$output_audio_path"
   # -- end: attaching metadata to audio --

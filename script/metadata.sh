@@ -97,7 +97,7 @@ write_album_metadata_to() {
   echo "METADATA_GENRE=\"$genre\"" >> "$album_metadata_filepath"
 
   echo "#[required] yyyy/mm/dd" >> "$album_metadata_filepath"
-  echo "METADATA_RELEASE_DATA=\"$nam_release_date\"" >> "$album_metadata_filepath"
+  echo "METADATA_RELEASE_DATE=\"$nam_release_date\"" >> "$album_metadata_filepath"
 
   echo "#[required] composer[,composer0][,composer1][,...]" >> "$album_metadata_filepath"
   echo "METADATA_COMPOSER=\"$composer\"" >> "$album_metadata_filepath"

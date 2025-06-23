@@ -7,6 +7,6 @@ METADATA_ALBUM_ARTIST="蔡琴"
 #[required] genre[,genre0][,genre1][,...]
 METADATA_GENRE="City Pop"
 #[required] yyyy/mm/dd
-METADATA_RELEASE_DATA="1992/7/1"
+METADATA_RELEASE_DATE="1992/7/1"
 #[required] composer[,composer0][,composer1][,...]
 METADATA_COMPOSER="蔡琴"

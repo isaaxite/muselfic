@@ -7,6 +7,6 @@ METADATA_ALBUM_ARTIST="Lana Del Rey"
 #[required] genre[,genre0][,genre1][,...]
 METADATA_GENRE="Baroque Pop,Dream Pop"
 #[required] yyyy/mm/dd
-METADATA_RELEASE_DATA="2014"
+METADATA_RELEASE_DATE="2014"
 #[required] composer[,composer0][,composer1][,...]
 METADATA_COMPOSER="Lana Del Rey"
