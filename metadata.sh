@@ -1,0 +1,26 @@
+#[required] album name
+METADATA_ALBUM="Heaven Beach"
+
+#[required] number
+METADATA_TOTAL_TRACKS="8"
+
+#[required]
+METADATA_ALBUM_ARTIST="Anri"
+
+#[required] genre[,genre0][,genre1][,...]
+METADATA_GENRE="City Pop,J-Pop,AOR,Funk"
+
+#[required] yyyy/mm/dd
+METADATA_RELEASE_DATE="1982/07/21"
+
+#[required] composer[,composer0][,composer1][,...]
+METADATA_COMPOSER="Anri,Kunio Tago"
+
+#[required] song name
+METADATA_TITLE="Last Summer Whisper"
+
+#[required]
+METADATA_ARTIST="Anri"
+
+#[required] number
+METADATA_TRACK_NUMBER="8"
